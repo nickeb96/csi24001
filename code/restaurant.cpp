@@ -278,3 +278,85 @@ void Restaurant::cookOperations()
 	}
 }
 
+/*
+* Pre: nothing
+*
+* Post: mCurrentUser is set
+*
+* Purpose: to login a user
+*
+* Author: Nick Boyle
+*/
+void Restaurant::login()
+{
+    ifstream loginFile;
+    string username, password, temp;
+    char c;
+    bool done = false;
+    
+    cout << "Enter Username: ";
+    getline(cin, username);
+    
+    system("cls");
+    cout << "Enter password: ";
+    
+    while (!done)
+    {
+        c = _getch();
+        
+        if (c == '\r')
+        {
+            done = true;
+        }
+        else if (c == '\b')
+        {
+            if (password.length() > 0)
+            {
+                password.erase(password.length() - 1, 1);
+                
+                system("cls");
+                cout << "Enter password: ";
+                for (unsigned int i = 1; i < password.length(); i++)
+                {
+                    cout << '*';
+                }
+            }
+        }
+        else
+        {
+            password.append(1, c);
+            cout << "*";
+        }
+    }
+    
+    loginFile.open(LOGIN_FILE_NAME);
+    
+    while (loginFile)
+    {
+        getline(loginFile, temp);
+        
+        if (temp == username)
+        {
+            getline(loginFile, temp);
+            
+            if (temp == password)
+            {
+                // handle setting current user
+                
+                cout << "Login successful\n";
+                return;
+            }
+            else
+            {
+                cout << "Invalid password\n";
+                return;
+            }
+        }
+        else
+        {
+            getline(loginFile, temp);
+        }
+    }
+    
+    cout << "User does not exist\n";
+}
