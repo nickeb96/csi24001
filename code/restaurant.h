@@ -24,8 +24,12 @@ the purpose of future plagiarism checking)
 #pragma once
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <conio.h>
 
 #include "employee.h"
+
+const std::string LOGIN_FILE_NAME = "login.txt";
 
 const int MAX_TABLES = 15;
 
@@ -85,6 +89,7 @@ private:
 	void managerMenu();
 	void cookMenu();
 	int getInputBetween(int min, int max);
+	void login();
 
 public:
 	Restaurant();
